@@ -1,5 +1,6 @@
 import { Heading,Text,Highlight } from '@chakra-ui/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import logoPic from '../../public/logo.png';
 import {History} from "../History";
 
@@ -13,8 +14,8 @@ export function Main() {
                 <div className='flex flex-row items-center justify-items-center justify-between w-full'>
                     <div className='text-center mx-5'>
                         <ul className='flex flex-row'>
-                            <li className='mx-4'><a href='/#'>首页</a></li>
-                            <li className='mx-4'><a href='/#'>订阅</a></li>
+                            <li className='mx-4'><Link href='/#'>首页</Link></li>
+                            <li className='mx-4'><Link href='/#'>订阅</Link></li>
                         </ul>
                     </div>
                     <div className='flex flex-row'>
