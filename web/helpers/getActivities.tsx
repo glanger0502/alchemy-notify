@@ -16,14 +16,9 @@ type Activity = {
 
 export function getActivities() {
     const url = "https://glanger.link/address-activity/list";
-    const getActivities = (url: string) => axios.get(url,{
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type": "application/json;charset=UTF-8"
-        }
-    }).then(res => res.data);
+    const getActivities = (url: string) => axios.get(url).then(res => res.data);
 
     const { data, error } = useSWR<Activities, Error>(url, getActivities)
-    return {data, error}
 
+    return data?.data;
 }

@@ -1,3 +1,3 @@
 config:
+  address-activity2:stack: dev
   aws:region: ap-east-1
-  core-infrastructure:env: development

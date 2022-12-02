@@ -6,12 +6,12 @@ import {History} from "../History";
 
 export function Main() {
     return (
-        <div>
-            <div className='flex flex-row my-4 w-[90%] mx-auto'>
+        <div className='w-[80%] items-center justify-items-center mx-auto'>
+            <div className='flex flex-row my-4 mx-auto'>
                 <div className='relative mx-6'>
                     <Image src={logoPic} alt="Picture of the logo" width={80} height={80} />
                 </div>
-                <div className='flex flex-row items-center justify-items-center justify-between w-full'>
+                <div className='flex flex-row items-center justify-items-center justify-between w-full mx-6'>
                     <div className='text-center mx-5'>
                         <ul className='flex flex-row'>
                             <li className='mx-4'><Link href='/#'>首页</Link></li>
@@ -30,7 +30,7 @@ export function Main() {
                     <Heading>Ethereum Address Activity</Heading>
                     <Text className='text-right'>search the address activity</Text>
                 </div>
-                <div className='m-6 w-[90%]'>
+                <div className='m-6'>
                     <div className='flex flex-col items-center justify-items-center'>
                         <div className='flex flex-row'>
                             <div className='m-4 border-lime-400'>Address:</div>
@@ -38,11 +38,10 @@ export function Main() {
                                 <Highlight query='spotlight' styles={{ px: '2', py: '1', rounded: 'full', bg: 'red.100' }}>0x460eB9889FB8DBb5c6143437F4146F7887BeA123</Highlight>
                             </div>
                         </div>
-                        <div className='mx-4 flex flex-col w-[90%]'>
+                        <div className='mx-4 flex flex-col'>
                             <div className='text-left'>
-                                <label>History</label>
+                            <History />
                             </div>
-                            {/* <History /> */}
                         </div>
                     </div>
                 </div>

@@ -11,26 +11,42 @@ const decode = (str: string):string => Buffer.from(str, 'base64').toString('bina
 const encode = (str: string):string => Buffer.from(str, 'binary').toString('base64');
 
 const region = process.env.REGION || 'ap-east-1';
-const subject = process.env.SUBJECT || 'glanger-activity-notify';
+const subject = process.env.SUBJECT || '';
 const topicArn = process.env.TOPICARN || '';
 const domainName = process.env.DOMAINNAME || '';
-const tableName = process.env.TABLE || '';
+// const tableName = process.env.TABLE || 'address-activity-ee8218e';
 const recordName = process.env.RECORDNAME || '';
 const recordId = process.env.RECORDID || '';
 const bashPath = process.env.ADDRESS_ACTIVITY || '';
+
+const glangerActivityTable = new aws.dynamodb.Table('address-activity', {
+    attributes:[
+        { name: "webhookId", type: "S" },
+        { name: "id", type: "S" },
+    ],
+    hashKey: "id",
+    rangeKey: "webhookId",
+    readCapacity: 5,
+    writeCapacity: 5,
+})
 
 const setAddressActivityHandler = async (req:any) => {
     const requestBody =  (req.body != undefined)? decode(req.body) : "";
     if(!requestBody) {
         return {
             statusCode: 200,
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
             body: JSON.stringify({"status":"error","message":"requestBody is empty"})
         }
     }
 
     const client = new aws.sdk.DynamoDB.DocumentClient();
     await client.put({
-        TableName: tableName,
+        TableName: glangerActivityTable.name.get(),
         Item: JSON.parse(requestBody),
         ReturnValues: 'NONE'
     }).promise();
@@ -52,6 +68,11 @@ const setAddressActivityHandler = async (req:any) => {
 
     return {
         statusCode: 200,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({"status":"ok","message":"address activity success"})
     }
 }
@@ -59,7 +80,7 @@ const setAddressActivityHandler = async (req:any) => {
 const getAddressActivitiesHandler = async (req:any) => {
     const documentClient = new aws.sdk.DynamoDB.DocumentClient();
     const params = {
-        TableName: tableName,
+        TableName: glangerActivityTable.name.get(),
         "ScanIndexForward": true
     };
       
@@ -67,6 +88,11 @@ const getAddressActivitiesHandler = async (req:any) => {
 
     return {
                 statusCode: 200,
+                headers: {
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
                 body: JSON.stringify({"status":"ok","data": result.Items})
             }
 
@@ -87,7 +113,37 @@ const addressActivityEndPoint = new awsx.apigateway.API("address-activity", {
             eventHandler: async (req) => {
                 return (await getAddressActivitiesHandler(req));
             }
-        }
+        },
+        {
+            path: "/",
+            method: "OPTIONS",
+            eventHandler: async (req) => {
+                return  {
+                    statusCode: 200,
+                    headers: {
+                        "Access-Control-Allow-Headers" : "Content-Type",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    body: JSON.stringify({"status":"success","message":"request optiosn success"})
+                }
+            }
+        },
+        {
+            path: "/list",
+            method: "OPTIONS",
+            eventHandler: async (req) => {
+                return  {
+                    statusCode: 200,
+                    headers: {
+                        "Access-Control-Allow-Headers" : "Content-Type",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    body: JSON.stringify({"status":"success","message":"request optiosn success"})
+                }
+            }
+        },
     ]
 })
 
@@ -96,7 +152,7 @@ const record = aws.route53.Record.get(recordName, recordId);
 
 const mapping = new aws.apigateway.BasePathMapping("mapping", {
     restApi: addressActivityEndPoint.restAPI,
-    basePath: bashPath, // We map our API into the "/page-views" base path
+    basePath: 'address-activity', // We map our API into the "/page-views" base path
     stageName: addressActivityEndPoint.stage.stageName, // We map the stage we got for free with `.x.API` above
     domainName: domainName, // We map it into the domain we registered above
 });

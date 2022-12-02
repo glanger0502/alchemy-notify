@@ -11,19 +11,6 @@ const domainName = process.env.DOMAINNAME || '';
 const route53DomainZoneId = process.env.ROUTE53DOMAINZONEID || '';
 const certARN = process.env.CERTARN || '';
 
-const glangerActivityTable = new aws.dynamodb.Table('address-activity', {
-    attributes:[
-        { name: "webhookId", type: "S" },
-        { name: "id", type: "S" },
-    ],
-    hashKey: "id",
-    rangeKey: "webhookId",
-    readCapacity: 5,
-    writeCapacity: 5,
-})
-
-export let tableName = glangerActivityTable.name;
-
 const domain = new aws.apigateway.DomainName("domain", {
     certificateArn: certARN,
     domainName: domainName
