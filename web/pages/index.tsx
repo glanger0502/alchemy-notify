@@ -1,3 +1,4 @@
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, ListItem, OrderedList } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Main } from '../components/Main'
 
@@ -14,18 +15,41 @@ export default function Home() {
         <Main />
       </main>
 
-      <footer className="flex flex-col items-center justify-items-center">
-        <div className='relative mx-auto my-0  w-[80%]'>
-          <h1>what this project purpose?</h1>
-          <div>
-            the project is used to subscribe ethereum address, then got the message by email,phone,telegram,discord robot.
-          </div>
-          <h1>How to use it ?</h1>
-          <div>
-            1. subscribe
-            2. select the router to receive the message
-            3. get the message
-          </div>
+      <footer className="flex flex-col items-center justify-items-center w-full">
+        <div className='relative mx-auto my-0 w-[70%]'>
+          <Accordion defaultIndex={[0]} allowMultiple>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex='1' textAlign='left'>
+                    What's this project purpose?
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                  the project is used to subscribe ethereum address, then got the message by email,phone,telegram,discord robot.
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box flex='1' textAlign='left'>
+                  How to use it ?
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                <OrderedList>
+                  <ListItem>subscribe</ListItem>
+                  <ListItem>select the router to receive the message</ListItem>
+                  <ListItem>get the message</ListItem>
+                </OrderedList>
+              </AccordionPanel>
+            </AccordionItem>
+
+          </Accordion>
         </div>
       </footer>
     </div>

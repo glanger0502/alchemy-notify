@@ -3,15 +3,31 @@ import axios from 'axios'
 
 type Activities = {
     "status": string,
-    "data": Activity[]
+    "data": AddressActivity[]
 }
 
-type Activity = {
+type AddressActivity = {
     "createdAt" : string,
-    "event": object,
+    "event": Event,
     "webhookId": string,
     "id": string,
     "type": string
+}
+
+type Event = {
+    "network": string,
+    "activity": Activity[]
+}
+
+type Activity = {
+    "category": string,
+    "fromAddress": string,
+    "toAddress": string,
+    "erc721TokenId": string,
+    "rawContract": {
+        "rawValue": string,
+        "address": string
+    }
 }
 
 export function getActivities() {

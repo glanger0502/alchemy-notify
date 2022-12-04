@@ -1,11 +1,10 @@
+import { Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { getActivities } from '../../helpers/getActivities';
-
+import { BigNumber } from "ethers";
 
 export function History() {
-
     const activities = getActivities();
-    console.log(activities);
 
     const [activityState, setActivityState] = useState(false);
     useEffect(() => {
@@ -19,17 +18,36 @@ export function History() {
             {!activityState && <div>onLoading</div>}
             {activityState && 
                 <div>
-                    <ul>
-                        {activities?.map((ele) => (
-                            <li key={ele.id}>
-                                <div>
-                                    <label>webhookId: {ele.webhookId}</label>
-                                    <label>Id: {ele.id}</label>
-                                </div>
-                                
-                            </li>
-                        ))}
-                    </ul>
+                    <TableContainer overflowX='auto' overflowY='hidden' maxWidth='100%' >
+                        <Table variant='simple' size='md'>
+                            <TableCaption>search result</TableCaption>
+                            <Thead>
+                                <Tr>
+                                    <Th>Network</Th>
+                                    <Th>Category</Th>
+                                    <Th>
+                                        FromAddress To
+                                        ToAddress
+                                    </Th>
+                                    <Th>RawValue</Th>
+                                </Tr>
+                            </Thead>
+                            <Tbody>
+                            {activities?.map((ele) => (
+                                <Tr key={ele.id}>
+                                    <Td>{ele.event.network}</Td>
+                                    <Td>{ele.event.activity == undefined && ""}</Td>
+                                    <Td>{ele.event.activity != undefined && ele.event.activity[0].category}</Td>
+                                    <Td>
+                                        from: {ele.event.activity != undefined && ele.event.activity[0].fromAddress}<br />
+                                        to: {ele.event.activity != undefined && ele.event.activity[0].toAddress}
+                                    </Td>
+                                    <Td>{ele.event.activity != undefined && (ele.event.activity[0].rawContract.rawValue)}</Td>
+                                </Tr>
+                            ))}
+                            </Tbody>
+                        </Table>
+                    </TableContainer>
                 </div>
             }
         </>
