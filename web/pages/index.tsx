@@ -22,7 +22,7 @@ export default function Home() {
               <h2>
                 <AccordionButton>
                   <Box flex='1' textAlign='left'>
-                    What's this project purpose?
+                    What is this project purpose?
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>

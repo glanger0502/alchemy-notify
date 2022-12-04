@@ -1,13 +1,13 @@
 import { Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { getActivities } from '../../helpers/getActivities';
-import { BigNumber } from "ethers";
 
 export function History() {
     const activities = getActivities();
 
     const [activityState, setActivityState] = useState(false);
     useEffect(() => {
+        console.log(activities);
         if(activities != undefined) {
             setActivityState(true);
         }
@@ -36,7 +36,7 @@ export function History() {
                             {activities?.map((ele) => (
                                 <Tr key={ele.id}>
                                     <Td>{ele.event.network}</Td>
-                                    <Td>{ele.event.activity == undefined && ""}</Td>
+                                    <Td>{ele.event.activity == undefined}</Td>
                                     <Td>{ele.event.activity != undefined && ele.event.activity[0].category}</Td>
                                     <Td>
                                         from: {ele.event.activity != undefined && ele.event.activity[0].fromAddress}<br />
