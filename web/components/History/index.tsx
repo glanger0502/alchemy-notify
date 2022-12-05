@@ -1,7 +1,6 @@
 import { Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { getActivities } from '../../helpers/getActivities';
-import {BigNumber} from 'ethers';
 import { Activities, AddressActivity, NewActivity } from '../../types';
 
 export function History() {
