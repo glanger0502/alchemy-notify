@@ -62,7 +62,7 @@ export function History() {
         <>
             {!activityState && <div>onLoading...</div>}
             {activityState && 
-                    <TableContainer overflowX='auto' overflowY='hidden' maxWidth='100%' >
+                    <TableContainer>
                         <Table variant='simple' size='md'>
                             <TableCaption>search result</TableCaption>
                             <Thead>

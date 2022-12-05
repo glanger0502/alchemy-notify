@@ -1,17 +1,17 @@
-import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, ListItem, OrderedList } from '@chakra-ui/react'
+import { Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Alert, AlertDescription, AlertIcon, AlertTitle, Box, ListItem, OrderedList } from '@chakra-ui/react'
 import Head from 'next/head'
 import { Main } from '../components/Main'
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-items-center">
+    <div className="">
       <Head>
         <title>Ethereum Address Activity</title>
         <meta name="description" content="Ethereum Address Activity" />
         <link rel="" href="/logo.png" />
       </Head>
 
-      <main className="w-full flex">
+      <main>
         <Main />
       </main>
 
